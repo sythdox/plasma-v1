@@ -1,0 +1,122 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local mainframe = Instance.new("ImageLabel")
+local UICorner = Instance.new("UICorner")
+local home = Instance.new("Frame")
+local UICorner_2 = Instance.new("UICorner")
+local hometitle = Instance.new("TextLabel")
+local TextLabel = Instance.new("TextLabel")
+local lockload = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+mainframe.Name = "mainframe"
+mainframe.Parent = ScreenGui
+mainframe.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+mainframe.Position = UDim2.new(0.31978932, 0, 0.312345684, 0)
+mainframe.Size = UDim2.new(0, 478, 0, 304)
+mainframe.Image = "rbxassetid://11237431378"
+mainframe.Visible = true
+mainframe.Active = true
+mainframe.Draggable = true
+
+UICorner.Parent = mainframe
+
+home.Name = "home"
+home.Parent = mainframe
+home.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+home.BackgroundTransparency = 1.000
+home.Size = UDim2.new(0, 478, 0, 304)
+
+UICorner_2.Parent = home
+
+hometitle.Name = "home title"
+hometitle.Parent = home
+hometitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+hometitle.BackgroundTransparency = 1.000
+hometitle.Position = UDim2.new(0.290794998, 0, 0.0263158083, 0)
+hometitle.Size = UDim2.new(0, 200, 0, 50)
+hometitle.Font = Enum.Font.LuckiestGuy
+hometitle.Text = "Home"
+hometitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+hometitle.TextSize = 47.000
+hometitle.TextTransparency = 0.690
+
+TextLabel.Parent = mainframe
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Size = UDim2.new(0, 92, 0, 36)
+TextLabel.Font = Enum.Font.PermanentMarker
+TextLabel.Text = "Plasma"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 32.000
+
+lockload.Name = "lockload"
+lockload.Parent = mainframe
+lockload.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+lockload.Position = UDim2.new(0.328451872, 0, 0.4375, 0)
+lockload.Size = UDim2.new(0, 164, 0, 37)
+lockload.Font = Enum.Font.SourceSans
+lockload.Text = "Lock"
+lockload.TextColor3 = Color3.fromRGB(0, 0, 0)
+lockload.TextSize = 14.000
+lockload.MouseButton1Down:connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/robloxrexyy/plasma-v1/main/plasma%20lock",true))()
+end)
+
+UICorner_3.Parent = lockload
+
+-- Scripts:
+
+local function MTHUW_fake_script() -- mainframe.drag 
+	local script = Instance.new('LocalScript', mainframe)
+
+	local UserInputService = game:GetService("UserInputService")
+	
+	local gui = script.Parent
+	
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+	
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+			
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+coroutine.wrap(MTHUW_fake_script)()
