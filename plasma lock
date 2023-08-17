@@ -12,7 +12,7 @@ getgenv().Target = true
 -- Configuration
 getgenv().Key = Enum.KeyCode.Q
 getgenv().Prediction = 0.12405
-getgenv().ChatMode = false
+getgenv().ChatMode = true
 getgenv().NotifMode = true
     getgenv().PartMode = true
     getgenv().AirshotFunccc = true
@@ -34,7 +34,7 @@ getgenv().AutoPrediction = false
     Tracer.Parent = game.Workspace	
     Tracer.Shape = _G.Types.Block
     Tracer.Size = Vector3.new(14,14,14)
-    Tracer.Color = Color3.fromRGB(255,7,255)
+    Tracer.Color = Color3.fromRGB(2255,255,255)
     
     --
     local plr = game.Players.LocalPlayer
